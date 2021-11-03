@@ -3,4 +3,4 @@ project(GA1C__)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(GA1C__ main.cpp)
+add_executable(GA1C__ main.cpp Number.cpp Number.h)
