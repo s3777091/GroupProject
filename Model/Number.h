@@ -4,6 +4,7 @@
 
 #ifndef MAIN_CPP_NUMBER_H
 #define MAIN_CPP_NUMBER_H
+//this
 
 class Number {
     int x;
@@ -25,6 +26,7 @@ public:
     void setY(int y) {
         Number::y = y;
     }
+
 
 };
 

@@ -71,12 +71,16 @@ int main() {
             array_value_of_x[i] = ARRAY_X[i].getX();
         }
 
+        function.quickSort(array_value_of_x, 1, count_X);
+        function.quickSort(array_value_of_y, 1, count_Y);
+
         int size_x = sizeof(array_value_of_x) / sizeof(array_value_of_x[0]);
         int size_y = sizeof(array_value_of_y) / sizeof(array_value_of_y[0]);
+
         int option;
         cout << "option: " << endl;
         cin >> option;
-
+        Number num;
         switch (option) {
             case 1 :
                 cout << "median and Median" << endl;
@@ -85,6 +89,7 @@ int main() {
                 break;
             case 2 :
                 cout << "mode Mode" << endl;
+                break;
             case 3 :
                 cout << "The variance or standard deviation" << endl;
                 cout << "var_x = { " << function.variance(array_value_of_x, size_x) << " }" << endl;
