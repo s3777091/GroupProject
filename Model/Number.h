@@ -5,10 +5,10 @@
 #ifndef MAIN_CPP_NUMBER_H
 #define MAIN_CPP_NUMBER_H
 
-
 class Number {
     int x;
     int y;
+
 public:
     int getX() const {
         return x;
@@ -25,6 +25,7 @@ public:
     void setY(int y) {
         Number::y = y;
     }
+
 };
 
 
