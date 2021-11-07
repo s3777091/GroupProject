@@ -25,7 +25,8 @@ public:
             return value;
         }
     }
-
+    
+    //Calculate Mean
     float mean(float arr[], int size) {
         float sum = 0;
         for (int i = 0; i < size; i++)
@@ -33,14 +34,15 @@ public:
         return sum / size;
     }
 
-    //calculate mean deviation
+    //Calculate mean deviation
     float deviation(float arr[], int size) {
         float sum = 0;
         for (int i = 0; i < size; i++)
             sum = sum + abs(arr[i] - mean(arr, size));
         return sum / size;
     }
-
+    
+    //Calculate Variance
     float variance(float a[], int n) {
         int sum = 0;
         for (int i = 0; i < n; i++)
@@ -55,11 +57,13 @@ public:
         return sqDiff / n;
     }
 
+    //Calculate Standard Deviation
     double standardDeviation(float arr[],
                              int n) {
         return sqrt(variance(arr, n));
     }
 
+    //Calculate Skewness
     float skewness(float arr[], int n) {
         // Find skewness using above formula
         float sum = 0;
@@ -73,6 +77,7 @@ public:
                       standardDeviation(arr, n));
     }
 
+    //Calculate Kurtosis
     float kurtosis(float *x, int n) {
         int i;
         double sum = 0;
