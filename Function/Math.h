@@ -1,6 +1,7 @@
 #include<iostream>
 #include<string>
-#include "Model/Number.h"
+
+#define MAX_ARRAY 51000
 
 using namespace std;
 #ifndef MAIN_CPP_MATH_H
@@ -9,7 +10,6 @@ using namespace std;
 
 class Math {
 public:
-
     static double mean(const double arr[], int size) {
         int sum = 0;
         for (int i = 0; i < size; i++) { sum += arr[i]; }
@@ -63,38 +63,38 @@ public:
         return k;
     }
 
-    static double mode(double x[], int n) {
-        int y[MAX_ARRAY];
-        int i, j, k, m, cnt, max = 0, no_mode = 0;
-        double num;
-        for (k = 0; k < n; k++){
-            cnt = 0;
-            num = x[k];
-            for (i = k; i < n; i++){
-                if (num == x[i])
-                    cnt++;
-            }
-            y[k] = cnt;
-            if (cnt >= 2){
-                no_mode++;
+    double Mode(double *array, int size) {
+        int mode = -1, position = 0, highest;
+        int frequency[MAX_ARRAY];
+
+        for (int i = 0; i < size; i++)        //initailize all frequencies to 0
+            *(frequency + i) = 0;
+
+        for (int k = 0; k < size; k++) {
+            for (int i = 1; i < size; i++) {
+                if (*(array + k) == *(array + i) && &*(array + k) != &*(array + i))  //avoid counting itself in the scan
+                    *(frequency + k) += 1;                 //increment the frequency of current number
             }
         }
-        if (no_mode == 0){
-            cout << "This data set has no modes\n" << endl;
-        }
-        for (j = 0; j < n; j++){
-            if (y[j] > max)
-                max = y[j];
-        }
-        for (m = 0; m < n; m++) {
-            if (max == y[m])
-            {
-                cout << x[m] << endl;
+
+        highest = *(frequency + 0);
+        for (int count = 1; count < size; count++)    // get position of highest number
+        {
+            if (*(frequency + count) > highest) {
+                highest = *(frequency + count);
+                position = +count;                //get postion in frequency array, to put into numbers array
             }
         }
-        return 0;
+
+        for (int i = 0; i < size; i++)
+            if (*(frequency + i) != *(frequency + (i + 1)) && (i + 1) < size) {
+                mode = *(array + position);
+                return mode;    //returns number that occurs most
+            }
+        return mode;
     }
 };
+
 
 static Math math;
 

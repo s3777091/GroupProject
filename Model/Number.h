@@ -2,6 +2,7 @@
 #define MAIN_CPP_NUMBER_H
 //this
 #include "Function/QuickCard.h"
+#include "../Function/Math.h"
 #include<fstream>
 #define MAX_ARRAY 51000
 
@@ -11,18 +12,18 @@ class Number {
 public:
     static void get_y_value(const string &path);
     static void get_x_value(const string &path);
+
+    static void calculate_median();
+    static void calculate_mode();
     int getX() const {
         return x;
     }
-
     void setX(int x) {
         this -> x = x;
     }
-
     int getY() const {
         return y;
     }
-
     void setY(int y) {
         this -> y = y;
     }
@@ -106,6 +107,18 @@ void Number::get_x_value(const string &path) {
     }
     inFile.close();
 }
+
+void Number::calculate_median() {
+    cout << "median and Median" << endl;
+    cout << "median_x = { " << math.median(data_x.ptx, data_x.count_X) << " }" << endl;
+    cout << "median_y = { " << math.median(data_y.pty, data_y.count_Y) << " }" << endl;
+}
+void Number::calculate_mode(){
+    cout << "Mode" << endl;
+    cout << "mode_x = { " << math.Mode(data_x.ptx, data_x.count_X) << " }" << endl;
+    cout << "mode_y = { " << math.Mode(data_y.pty, data_y.count_Y) << " }" << endl;
+}
+
 Number::~Number() {
     cout << "s3777091 - HUYNH DAC TAN DAT" << endl;
 }
