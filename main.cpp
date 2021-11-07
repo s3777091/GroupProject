@@ -63,7 +63,7 @@ void get_y_value(const string &path) {
                 data_y.count_Y++;
                 if (data_y.count_Y > MAX_ARRAY) {
                     delete[] data_y.ARRAY_VALUE_OF_Y;
-                    float *ARRAY_VALUE_OF_Y = new float[MAX_ARRAY + 20];
+                    float *ARRAY_VALUE_OF_Y = new float[data_y.count_Y + 20];
                     data_y.pty = ARRAY_VALUE_OF_Y;
                 }
             }
