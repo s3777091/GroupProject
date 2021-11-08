@@ -4,12 +4,10 @@
 #include "Function/Math.h"
 
 using namespace std;
-static const string data_file = R"(C:\Users\Asus\Desktop\GA1C++\Data\data1.csv)";
 
 int main() {
     try {
-        num.get_y_value(data_file);
-        num.get_x_value(data_file);
+        num.get_data();
         char option;
         cout << "Option: " << endl;
         cin >> option;

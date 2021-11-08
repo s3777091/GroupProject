@@ -6,10 +6,12 @@
 #include<fstream>
 #define MAX_ARRAY 51000
 
+static const string data_file = R"(C:\Users\Asus\Desktop\GA1C++\Data\data1.csv)";
 class Number {
     int x{};
     int y{};
 public:
+    static void get_data();
     static void get_y_value(const string &path);
     static void get_x_value(const string &path);
 
@@ -107,6 +109,11 @@ void Number::get_x_value(const string &path) {
     }
     inFile.close();
 }
+void Number::get_data() {
+    num.get_y_value(data_file);
+    num.get_x_value(data_file);
+}
+
 
 void Number::calculate_median() {
     cout << "median and Median" << endl;
@@ -118,6 +125,8 @@ void Number::calculate_mode(){
     cout << "mode_x = { " << math.Mode(data_x.ptx, data_x.count_X) << " }" << endl;
     cout << "mode_y = { " << math.Mode(data_y.pty, data_y.count_Y) << " }" << endl;
 }
+
+
 
 Number::~Number() {
     cout << "s3777091 - HUYNH DAC TAN DAT" << endl;

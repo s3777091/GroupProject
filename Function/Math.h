@@ -16,6 +16,7 @@ public:
         return (double) sum / (double) size;
     }
 
+
     static double median(double *arr, int size) {
         if (size % 2 != 0)
             return (double) arr[size / 2];
