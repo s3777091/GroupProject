@@ -10,9 +10,6 @@ using namespace std;
 
 class Math {
 public:
-
-
-
     static double median(double *arr, int size) {
         int flag = size % 2;
         if (flag!= 0){
@@ -61,6 +58,13 @@ public:
             var = var / (size - 1);
         }
         return pow(var, 2);
+    }
+
+    static double mad(double a[], int size, double mean_value){
+        double mad_value = 0;
+        for (int i = 0; i < size; i++)
+                mad_value = mad_value + abs(a[i] - mean_value);
+        return mad_value / size;
     }
 
 

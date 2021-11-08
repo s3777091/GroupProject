@@ -21,6 +21,9 @@ int main() {
             case 'c' :
                 num.calculate_Variance();
                 break;
+            case 'd':
+                num.calculate_Mad();
+                break;
             default :
                 cout << "Pls Try Again" << endl;
                 break;

@@ -28,6 +28,8 @@ public:
     static void calculate_mode();
 
     static void calculate_Variance();
+    static void calculate_Mad();
+
 
     int getX() const {
         return x;
@@ -47,7 +49,8 @@ public:
 
     virtual ~Number();
 
-    double calculate_mean(Number ARRAY_X, int size);
+
+
 };
 
 static Number num;
@@ -174,11 +177,20 @@ void Number::calculate_Variance() {
     double variance_y = math.variance(data_y.pty, data_y.count_Y - 3, mean_of_y);
     cout << "Variance_x = { " << variance_x << " }" << endl;
     cout << "Variance_y = { " << variance_y << " }" << endl;
-    double stdev_x = sqrt(variance_x);
-    double stdev_y = sqrt(variance_y);
-    cout << "Variance_x = { " << stdev_x << " }" << endl;
-    cout << "Variance_x = { " << stdev_y << " }" << endl;
+    double st_x = sqrt(variance_x);
+    double st_y = sqrt(variance_y);
+    cout << "stdev_x = { " << st_x << " }" << endl;
+    cout << "stdev_y = { " << st_y << " }" << endl;
 }
+
+void Number::calculate_Mad(){
+    cout << "MAD" << endl;
+    double mean_of_x = calculate_mean_x();
+    double mean_of_y = calculate_mean_y();
+    cout << "mad_x = { " << math.mad(data_x.ptx, data_x.count_X - 3, mean_of_x) << " }" << endl;
+    cout << "mad_y = { " << math.mad(data_y.pty, data_y.count_Y - 3, mean_of_y) << " }" << endl;
+}
+
 
 Number::~Number() {
     cout << "s3777091 - HUYNH DAC TAN DAT" << endl;
