@@ -52,6 +52,7 @@ public:
             quickSort(arr, pi + 1, high);
         }
     }
+
 };
 
 static QuickCard function;

@@ -1,6 +1,6 @@
 #include<iostream>
 #include<string>
-
+#include <math.h>
 #define MAX_ARRAY 51000
 
 using namespace std;
@@ -10,70 +10,29 @@ using namespace std;
 
 class Math {
 public:
-    static double mean(const double arr[], int size) {
-        int sum = 0;
-        for (int i = 0; i < size; i++) { sum += arr[i]; }
-        return (double) sum / (double) size;
-    }
+
 
 
     static double median(double *arr, int size) {
-        if (size % 2 != 0)
-            return (double) arr[size / 2];
-        return (double) (arr[(size - 1) / 2] + arr[size / 2]) / 2.0;
-    }
-
-    static double variance(const double a[], int n) {
-        int sum = 0;
-        for (int i = 0; i < n; i++)
-            sum += a[i];
-        double meanT = (double) sum /
-                       (double) n;
-
-        double sqDiff = 0;
-        for (int i = 0; i < n; i++)
-            sqDiff += (a[i] - meanT) *
-                      (a[i] - meanT);
-        return sqDiff / n;
-    }
-
-    static double standardDeviation(double arr[],
-                                    int n) {
-        return sqrt(variance(arr, n));
-    }
-
-
-    static double kurtosis(double *x, int n) {
-        int i;
-        double sum = 0;
-        double mean_x;
-
-        // Calculate mean
-        for (i = 0; i < n; i++) {
-            sum += x[i];
+        int flag = size % 2;
+        if (flag!= 0){
+            double median = arr[((size - 1) / 2)];
+            return median;
+        }else{
+            double median = ((arr[size / 2] + arr[(size / 2) +1]) /2);
+            return median;
         }
-        mean_x = sum / n;
-        double r = 0;
-        double q = 0;
-        for (i = 0; i < n; i++) {
-            r += pow(x[i] - mean_x, 4);
-            q += pow(x[i] - mean_x, 2);
-        }
-
-        double k = n * r / pow(q, 2);
-        return k;
     }
 
-    double Mode(double *array, int size) {
+    static double Mode(double *arr, int size) {
         int mode = -1, position = 0, highest;
-        int frequency[MAX_ARRAY];
+        int *frequency = new int[MAX_ARRAY];
 
         for (int i = 0; i < size; i++)        //initailize all frequencies to 0
             *(frequency + i) = 0;
-
         for (int k = 0; k < size; k++) {
             for (int i = 1; i < size; i++) {
-                if (*(array + k) == *(array + i) && &*(array + k) != &*(array + i))  //avoid counting itself in the scan
+                if (*(arr + k) == *(arr + i) && &*(arr + k) != &*(arr + i))  //avoid counting itself in the scan
                     *(frequency + k) += 1;                 //increment the frequency of current number
             }
         }
@@ -89,11 +48,22 @@ public:
 
         for (int i = 0; i < size; i++)
             if (*(frequency + i) != *(frequency + (i + 1)) && (i + 1) < size) {
-                mode = *(array + position);
-                return mode;    //returns number that occurs most
+                mode = *(arr + position);
+                return mode;
             }
         return mode;
     }
+
+    static double variance(double *a, int size, double mean_value) {
+        double var = 0.0;
+        for (int i = 0; i < size; i++){
+            var += pow((a[i] - mean_value), 2);
+            var = var / (size - 1);
+        }
+        return pow(var, 2);
+    }
+
+
 };
 
 

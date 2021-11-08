@@ -18,6 +18,9 @@ int main() {
             case 'b' :
                 num.calculate_mode();
                 break;
+            case 'c' :
+                num.calculate_Variance();
+                break;
             default :
                 cout << "Pls Try Again" << endl;
                 break;
