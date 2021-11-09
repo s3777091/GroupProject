@@ -29,6 +29,7 @@ public:
 
     static void calculate_Variance();
     static void calculate_Mad();
+    static void calculate_Kurtosis();
 
 
     int getX() const {
@@ -189,6 +190,14 @@ void Number::calculate_Mad(){
     double mean_of_y = calculate_mean_y();
     cout << "mad_x = { " << math.mad(data_x.ptx, data_x.count_X - 3, mean_of_x) << " }" << endl;
     cout << "mad_y = { " << math.mad(data_y.pty, data_y.count_Y - 3, mean_of_y) << " }" << endl;
+}
+
+void Number::calculate_Kurtosis(){
+    cout << "Kurtosis" << endl;
+    double mean_of_x = calculate_mean_x();
+    double mean_of_y = calculate_mean_y();
+    cout << "kurtosis_x = { " << math.kurtosis(data_x.ptx, data_x.count_X - 3, mean_of_x) << " }" << endl;
+    cout << "kurtosis_y = { " << math.kurtosis(data_y.pty, data_y.count_Y - 3, mean_of_y) << " }" << endl;
 }
 
 

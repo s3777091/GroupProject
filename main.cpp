@@ -24,6 +24,9 @@ int main() {
             case 'd':
                 num.calculate_Mad();
                 break;
+            case 'e':
+                num.calculate_Kurtosis();
+                break;
             default :
                 cout << "Pls Try Again" << endl;
                 break;

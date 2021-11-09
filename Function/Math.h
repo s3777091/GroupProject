@@ -62,9 +62,15 @@ public:
 
     static double mad(double a[], int size, double mean_value){
         double mad_value = 0;
-        for (int i = 0; i < size; i++)
-                mad_value = mad_value + abs(a[i] - mean_value);
-        return mad_value / size;
+        for (int i = 0; i < size; i++){
+            mad_value = mad_value + abs(a[i] - mean_value);
+            mad_value = mad_value / size;
+        }
+        return mad_value;
+    }
+
+    static double kurtosis(double *x, int n, double mean_value) {
+        
     }
 
 
