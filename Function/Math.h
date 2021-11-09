@@ -72,8 +72,16 @@ public:
     static double kurtosis(double *x, int n, double mean_value) {
         
     }
-
-
+    
+    static double covariance(double arr_x[], double arr_y[], int size,double mean_x,double mean_y) {
+        double cov_xy = 0;
+        double sum = 0;
+        for (i = 0; i < size; i++) {
+            sum = sum + ((arr_x[i] - mean_x) * (arr_y[i] - mean_y));
+            cov_xy = sum / (size - 1);
+        }
+        return cov_xy;
+    }
 };
 
 
