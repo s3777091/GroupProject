@@ -14,10 +14,7 @@ class Number {
     int y{};
 public:
     static void get_data();
-
-    static void get_y_value(const string &path);
-
-    static void get_x_value(const string &path);
+    static void get_value(const string &path);
 
     static double calculate_mean_x();
 
@@ -49,9 +46,6 @@ public:
     }
 
     virtual ~Number();
-
-
-
 };
 
 static Number num;
@@ -60,38 +54,10 @@ static struct data_calling_y {
     int count_Y = 1;
     Number *ARRAY_Y = new Number[MAX_ARRAY];
     Number *y_pointer = ARRAY_Y;
+
     double *ARRAY_VALUE_OF_Y = new double[MAX_ARRAY];
     double *pty = ARRAY_VALUE_OF_Y;
 } data_y;
-
-void Number::get_y_value(const string &path) {
-    ifstream inFile(path);
-    string line;
-    if (!inFile) {
-        cout << "That file can't open." << endl;
-    } else {
-        while (getline(inFile, line, ',')) {
-            size_t tab = line.find('\n');
-            data_y.count_Y++;
-            if (tab != '\n') {
-                string string_y_number = QuickCard::exchange(line.substr(0, tab));
-                (data_y.y_pointer + data_y.count_Y)->setY(atoi(string_y_number.c_str()));
-                if (data_y.count_Y > MAX_ARRAY) {
-                    auto *ARRAY_VALUE_OF_Y = new double[data_y.count_Y + 1000];
-                    data_y.ARRAY_VALUE_OF_Y = ARRAY_VALUE_OF_Y;
-                    for (int i = 3; i < data_y.count_Y; i++) {
-                        ARRAY_VALUE_OF_Y[i] = data_y.ARRAY_VALUE_OF_Y[i];
-                    }
-                    delete[] data_y.ARRAY_VALUE_OF_Y;
-                    data_y.ARRAY_VALUE_OF_Y = ARRAY_VALUE_OF_Y;
-                }
-            }
-        }
-        for (int i = 3; i < data_y.count_Y; i++) *(data_y.pty + i) = (data_y.y_pointer + i)->getY();
-        function.quickSort(data_y.pty, 0,data_y.count_Y);
-    }
-    inFile.close();
-}
 
 struct data_calling_x {
     int count_X = 1;
@@ -102,7 +68,8 @@ struct data_calling_x {
 } data_x;
 
 
-void Number::get_x_value(const string &path) {
+
+void Number::get_value(const string &path) {
     ifstream inFile(path);
     string line;
     if (!inFile) {
@@ -110,43 +77,42 @@ void Number::get_x_value(const string &path) {
     } else {
         while (getline(inFile, line, ',')) {
             size_t tab = line.find('\n');
-            data_x.count_X++;
             if (tab != std::string::npos) {
                 string string_x_number = line.substr(tab + 1);
                 (data_x.ARRAY_X + data_x.count_X)->setX(atoi(string_x_number.c_str()));
-                if (data_x.count_X > MAX_ARRAY) {
-                    auto *ARRAY_VALUE_OF_X = new double[data_x.count_X + 1000];
-                    data_x.ARRAY_VALUE_OF_X = ARRAY_VALUE_OF_X;
-                    for (int i = 3; i < data_x.count_X; i++) {
-                        ARRAY_VALUE_OF_X[i] = data_x.ARRAY_VALUE_OF_X[i];
-                    }
-                    delete[] data_x.ARRAY_VALUE_OF_X;
-                    data_x.ARRAY_VALUE_OF_X = ARRAY_VALUE_OF_X;
-                }
+                data_x.count_X++;
+
+                string string_y_number = line.substr(0, tab);
+                (data_y.y_pointer + data_y.count_Y)->setY(atoi(string_y_number.c_str()));
+                data_y.count_Y++;
             }
         }
-        for (int i = 1; i < data_x.count_X; i++) *(data_x.ptx + i) = (data_x.x_pointer + i)->getX();
+        for (int i = 1; i < data_x.count_X; i++) {
+            *(data_x.ptx + i) = (data_x.x_pointer + i)->getX();
+            *(data_y.pty + i) = (data_y.y_pointer + i)->getY();
+        }
+
         function.quickSort(data_x.ptx, 0, data_x.count_X);
+        function.quickSort(data_y.pty, 0,data_y.count_Y);
     }
     inFile.close();
 }
 
 void Number::get_data() {
-    num.get_y_value(data_file);
-    num.get_x_value(data_file);
+    num.get_value(data_file);
 }
 
 
 void Number::calculate_median() {
     cout << "median and Median" << endl;
-    cout << "median_x = { " << math.median(data_x.ptx, data_x.count_X - 3) << " }" << endl;
-    cout << "median_y = { " << math.median(data_y.pty, data_y.count_Y - 3) << " }" << endl;
+    cout << "median_x = { " << math.median(data_x.ptx, data_x.count_X - 2) << " }" << endl;
+    cout << "median_y = { " << math.median(data_y.pty, data_y.count_Y - 2) << " }" << endl;
 }
 
 void Number::calculate_mode() {
     cout << "Mode" << endl;
-    cout << "mode_x = { " << math.Mode(data_x.ptx, data_x.count_X - 3) << " }" << endl;
-    cout << "mode_y = { " << math.Mode(data_y.pty, data_y.count_Y - 3) << " }" << endl;
+    cout << "mode_x = { " << math.Mode(data_x.ptx, data_x.count_X - 2) << " }" << endl;
+    cout << "mode_y = { " << math.Mode(data_y.pty, data_y.count_Y - 2) << " }" << endl;
 }
 
 
@@ -156,7 +122,7 @@ double Number::calculate_mean_x() {
     for (int i = 0; i < data_x.count_X; i++) {
         sumX += data_x.ARRAY_X[i].getX();
     }
-    mean = sumX / (data_x.count_X - 3);
+    mean = sumX / (data_x.count_X - 2);
     return mean;
 }
 
@@ -166,7 +132,7 @@ double Number::calculate_mean_y() {
     for (int i = 0; i < data_y.count_Y; i++) {
         sumY += data_y.ARRAY_Y[i].getY();
     }
-    mean_Y = sumY / (data_y.count_Y - 3);
+    mean_Y = sumY / (data_y.count_Y - 2);
     return mean_Y;
 }
 
@@ -174,8 +140,8 @@ void Number::calculate_Variance() {
     cout << "Variance" << endl;
     double mean_of_x = calculate_mean_x();
     double mean_of_y = calculate_mean_y();
-    double variance_x = math.variance(data_x.ptx, data_x.count_X - 3, mean_of_x);
-    double variance_y = math.variance(data_y.pty, data_y.count_Y - 3, mean_of_y);
+    double variance_x = math.variance(data_x.ptx, data_x.count_X - 2, mean_of_x);
+    double variance_y = math.variance(data_y.pty, data_y.count_Y - 2, mean_of_y);
     cout << "Variance_x = { " << variance_x << " }" << endl;
     cout << "Variance_y = { " << variance_y << " }" << endl;
     double st_x = sqrt(variance_x);
@@ -188,16 +154,15 @@ void Number::calculate_Mad(){
     cout << "MAD" << endl;
     double mean_of_x = calculate_mean_x();
     double mean_of_y = calculate_mean_y();
-    cout << "mad_x = { " << math.mad(data_x.ptx, data_x.count_X - 3, mean_of_x) << " }" << endl;
-    cout << "mad_y = { " << math.mad(data_y.pty, data_y.count_Y - 3, mean_of_y) << " }" << endl;
+    cout << "mad_x = { " << math.mad(data_x.ptx, data_x.count_X - 2, mean_of_x) << " }" << endl;
+    cout << "mad_y = { " << math.mad(data_y.pty, data_y.count_Y - 2, mean_of_y) << " }" << endl;
 }
 
 void Number::calculate_Kurtosis(){
     cout << "Kurtosis" << endl;
     double mean_of_x = calculate_mean_x();
     double mean_of_y = calculate_mean_y();
-    cout << "kurtosis_x = { " << math.kurtosis(data_x.ptx, data_x.count_X - 3, mean_of_x) << " }" << endl;
-    cout << "kurtosis_y = { " << math.kurtosis(data_y.pty, data_y.count_Y - 3, mean_of_y) << " }" << endl;
+    cout << "kurtosis_x = { " << math.covariance(data_x.ptx, data_y.pty, data_x.count_X - 2, mean_of_x, mean_of_y) << " }" << endl;
 }
 
 
