@@ -51,13 +51,13 @@ public:
         return mode;
     }
 
-    static double variance(double *a, int size, double mean_value) {
+    static double variance(double arr[], int size, double mean_value) {
         double var = 0.0;
         for (int i = 0; i < size; i++){
-            var += pow((a[i] - mean_value), 2);
+            var += pow((arr[i] - mean_value), 2);
             var = var / (size - 1);
         }
-        return pow(var, 2);
+        return pow(var,2);
     }
 
     static double mad(double a[], int size, double mean_value){
@@ -69,20 +69,79 @@ public:
         return mad_value;
     }
 
-    static double kurtosis(double *x, int n, double mean_value) {
-        
+    static double kurtosis(double arr[], int size, double mean_value) {
+        double kur = 0;
+        //Calculate moment4 and moment2
+        double m4 = 0;
+        double m2 = 0;
+        for (int i = 0; i < size; i++) {
+            m4 += pow (arr[i] - mean_value, 4);
+            m2 += pow (arr[i] - mean_value, 2);
+        }
+        kur = size * m4 / pow (m2,2);
+        return kur;
     }
     
     static double covariance(double arr_x[], double arr_y[], int size,double mean_x,double mean_y) {
         double cov_xy = 0;
         double sum = 0;
-        int pls = 1/(size - 1);
         for (int i = 0; i < size; i++) {
-            sum += ((arr_x[i] - mean_x) * (arr_y[i] - mean_y));
-            cov_xy = sum + pls;
+            sum = sum + ((arr_x[i] - mean_x) * (arr_y[i] - mean_y));
+            cov_xy = sum / (size - 1);
         }
         return cov_xy;
     }
+
+    static double Skewness (double arr[], int size, double mean_value) {
+        double Skewness = 0;
+        double sum = 0;
+        for (int i = 0; i < size; i++) {
+            sum = (arr[i] - mean_value) * (arr[i] - mean_value) * (arr[i] - mean_value);
+        }
+        return Skewness = sum / (size * variance(arr, size, mean_value) * variance( arr, size, mean_value)
+                              * variance( arr, size, mean_value) * variance( arr, size, mean_value));
+    }
+
+    static double ThirdQuartile (double arr[], int size) {
+        double Q3 = arr[(size * 3/4)];
+        if ((fmod(arr[size * 3/4], 2)) == 0) {
+            Q3 = (Q3 + arr[(size * 3/4 - 3/4 )]) /2;
+        }
+        else {
+            Q3 = (Q3 +arr[(size *3/4)]) /2;
+        }
+        return Q3;
+    }
+
+    static double Coefficient (double arr_x[], double arr_y[], int size) {
+        double sumX = 0, sumY = 0, sumXY = 0;
+        double sumX2 = 0, sumY2 = 0;
+        double CC = 0;
+        for (int i = 0; i < size; i++) {
+            sumX = sumX + arr_x[i];
+            sumY = sumY + arr_y[i];
+            sumXY = sumXY + arr_x[i] * arr_y[i];
+
+            sumX2 = sumX2 + arr_x[i] * arr_x[i];
+            sumY2 = sumY2 + arr_y[i] * arr_y[i];
+        }
+
+        CC = (size * sumXY - sumX * sumY)
+             / sqrt ((size * sumX2 - sumX * sumX) * (size * sumY2 - sumY * sumY));
+
+        return CC;
+    }
+
+    static double Regression (double arr_x[], double arr_y[], double mean_x, double mean_y, int size) {
+        double a, b;
+
+        a = Coefficient (arr_x, arr_y, size) * variance(arr_y, size, mean_y) / variance (arr_x, size, mean_x);
+
+        b = mean_y - a * mean_x;
+
+        return a, b;
+    }
+
 };
 
 
