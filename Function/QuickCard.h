@@ -53,6 +53,11 @@ public:
         }
     }
 
+    void print_array(double arr[], int size) {
+        int i;
+        for (i=0; i < size; i++)
+            cout << arr[i] <<  endl;
+    }
 };
 
 static QuickCard function;

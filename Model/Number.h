@@ -16,6 +16,8 @@ public:
     static void get_data();
     static void get_value(const string &path);
 
+    static void display();
+
     static double calculate_mean_x();
 
     static double calculate_mean_y();
@@ -75,14 +77,14 @@ void Number::get_value(const string &path) {
     if (!inFile) {
         cout << "That file can't open." << endl;
     } else {
-        while (getline(inFile, line, ',')) {
-            size_t tab = line.find('\n');
+        while (getline(inFile, line, '\n')) {
+            size_t tab = line.find(',');
             if (tab != std::string::npos) {
-                string string_x_number = line.substr(tab + 1);
+                string string_x_number =  line.substr(0, tab);
                 (data_x.ARRAY_X + data_x.count_X)->setX(atoi(string_x_number.c_str()));
                 data_x.count_X++;
 
-                string string_y_number = line.substr(0, tab);
+                string string_y_number = line.substr(tab + 1);
                 (data_y.y_pointer + data_y.count_Y)->setY(atoi(string_y_number.c_str()));
                 data_y.count_Y++;
             }
@@ -100,6 +102,11 @@ void Number::get_value(const string &path) {
 
 void Number::get_data() {
     num.get_value(data_file);
+}
+
+void Number::display(){
+    function.print_array(data_y.pty, data_y.count_Y);
+    function.print_array(data_x.ptx, data_x.count_X);
 }
 
 

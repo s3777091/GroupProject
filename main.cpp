@@ -27,6 +27,9 @@ int main() {
             case 'e':
                 num.calculate_Kurtosis();
                 break;
+            case 'f':
+                num.display();
+                break;
             default :
                 cout << "Pls Try Again" << endl;
                 break;
