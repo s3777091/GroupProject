@@ -1,37 +1,21 @@
 #include<iostream>
 #include<string>
-
+#include <math.h>
+#include <fstream>
 using namespace std;
 
 #ifndef MAIN_CPP_ALLFUNCTION_H
 #define MAIN_CPP_ALLFUNCTION_H
 
 class QuickCard {
-
 public:
-    static bool isNumber(const string& str) {
-        for (char c: str) {
-            if (!isdigit(c)) return false;
-        }
-        return true;
-    }
-
-    static string exchange(string value) {
-        if (value == " ") {
-            string t = nullptr;
-            return t;
-        } else {
-            return value;
-        }
-    }
-
     static void swap(double *a, double *b) {
         int t = *a;
         *a = *b;
         *b = t;
     }
 
-    int partition (double *arr, int low, int high) {
+    static int partition (double *arr, int low, int high) {
         int pivot = arr[high];
         int i = (low - 1);
 
@@ -45,7 +29,7 @@ public:
         return (i + 1);
     }
 
-    void quickSort(double *arr, int low, int high) {
+    static void quickSort(double *arr, int low, int high) {
         if (low < high) {
             int pi = partition(arr, low, high);
             quickSort(arr, low, pi - 1);

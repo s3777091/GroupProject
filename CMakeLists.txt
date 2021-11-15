@@ -3,4 +3,4 @@ project(GA1C__)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(GA1C__ main.cpp Model/Number.h Function/QuickCard.h Function/Math.h)
+add_executable(GA1C__ main.cpp Function/QuickCard.h Function/Math.h Model/STACK.h)
