@@ -1,35 +1,23 @@
 //code from dathuynh
 #ifndef MAIN_CPP_STACK_H
 #define MAIN_CPP_STACK_H
-#include "../Function/Math.h"
-
+#include "../Function/QuickCard.h"
 using namespace std;
-
-class STACK : protected Math, protected QuickCard{
+#define MAX_ARRAY 51000
+class STACK{
 public:
     STACK();
-
     static bool push(int x, int y);
-
     static int isEmpty();
-
     static int isFull();
-
-    static void displayItems();
-
-    static void get_data();
-
+    static void get_data(string data_file);
     static int sort();
-
-    static void printf_math();
-    virtual ~STACK();
 };
 
-
-struct stack {
+static struct stack{
     int top;
     double* data_x = new double [MAX_ARRAY];
-    double data_y[MAX_ARRAY];
+    double* data_y = new double [MAX_ARRAY];
 } st;
 
 STACK::STACK() {
@@ -61,42 +49,18 @@ bool STACK::push(int x, int y) {
     return true;
 }
 
-
 int STACK::sort() {
     while (!isEmpty()) {
-        quickSort(st.data_x, 0, st.top);
-        quickSort(st.data_y, 0, st.top);
+        function.quickSort<double>(st.data_x, 0, st.top);
+        function.quickSort<double>(st.data_y, 0, st.top);
         return 0;
     }
     cout << "Your Data is empty" << endl;
     return 1;
 }
 
-
-void STACK::printf_math() {
-    double mean_x = mean(st.data_x, st.top);
-    double mean_y = mean(st.data_y, st.top);
-
-    cout << mean_x << " "<< mean_y << endl;
-    cout << "median and Median" << endl;
-    cout << "median_x = { " << median(st.data_x, st.top) << " }"
-         << " _ " << "median_y = { " << median(st.data_y, st.top) << " }" << endl;
-
-    cout << "mode_x = { " << mode(st.data_x, st.top) << " }"
-         << " _ " << "mode_y = { " << mode(st.data_y, st.top) << " }" << endl;
-
-}
-
 static STACK stk;
-
-void STACK::displayItems() {
-    for (int i = 1; i < st.top + 1; i++) {
-        cout << st.data_x[i] << " " << st.data_y[i] << endl;
-    }
-}
-
-void STACK::get_data() {
-    string data_file = R"(C:\Users\Asus\Desktop\GA1C++\Data\data1.csv)";
+void STACK::get_data(string data_file) {
     ifstream inFile(data_file);
     string line;
     if (!inFile) {
@@ -107,7 +71,6 @@ void STACK::get_data() {
             if (tab != std::string::npos) {
                 string string_x_number = line.substr(0, tab);
                 int x = atoi(string_x_number.c_str());
-
                 string string_y_number = line.substr(tab + 1);
                 int y = atoi(string_y_number.c_str());
                 stk.push(x, y);
@@ -115,11 +78,6 @@ void STACK::get_data() {
         }
     }
     inFile.close();
-}
-
-
-STACK::~STACK() {
-    cout << "s3777091 - HUYNH DAC TAN DAT" << endl;
 }
 
 

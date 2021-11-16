@@ -1,47 +1,60 @@
 #include "../Function/QuickCard.h"
-#define MAX_ARRAY 51000
+#include "../Model/STACK.h"
 
 using namespace std;
 #ifndef MAIN_CPP_MATH_H
 #define MAIN_CPP_MATH_H
 
-class Math {
+
+class Math : public STACK {
 public:
-    static double mean(double arr[], int size) {
-        double sum = 0;
-        double mean;
-        for (int i = 0; i < size; i++) {
-            sum += arr[i];
+    virtual ~Math();
+    template<typename T>
+    static void mean(T *mean_x, T *mean_y) {
+        T sum_x = 0;
+        for (int i = 0; i < st.top; i++) {
+            sum_x += st.data_x[i];
         }
-        mean = sum / size;
-        return mean;
-
+        *mean_x = sum_x / st.top;
+        T sum_y = 0;
+        for (int j = 0; j < st.top; j++) {
+            sum_y += st.data_y[j];
+        }
+        *mean_y = sum_y / st.top;
     }
 
-    static double median(double *arr, int size) {
-        int flag = size % 2;
+    template<typename m>
+    static void median(m *median_x, m *median_y) {
+        int flag = st.top % 2;
         if (flag != 0) {
-            double median = arr[((size - 1) / 2)];
-            return median;
+            *median_x = st.data_x[((st.top - 1) / 2)];
+            *median_y = st.data_y[((st.top - 1) / 2)];
         } else {
-            double median = ((arr[size / 2] + arr[(size / 2) + 1]) / 2);
-            return median;
+            *median_x = ((st.data_x[st.top / 2] + st.data_x[(st.top / 2) + 1]) / 2);
+            *median_y = ((st.data_y[st.top / 2] + st.data_y[(st.top / 2) + 1]) / 2);
         }
     }
-    static double mode(double *arr, int size) {
-        int maxValue = 0, maxCount = 0, i, j;
-        for (i = 0; i < size; ++i) {
-            int count = 0;
-            for (j = 0; j < size; ++j) {
-                if (arr[j] == arr[i])
-                    ++count;
+
+    template<typename F>
+    static void mode(F *mode_x, F *mode_y) {
+        int maxCount_x = 0, maxCount_y = 0;
+        for (int i = 0; i < st.top; ++i) {
+            int count_x = 0;
+            int count_y = 0;
+            for (int j = 0; j < st.top; ++j) {
+                if (st.data_x[j] == st.data_x[i])
+                    ++count_x;
+                if (st.data_y[j] == st.data_y[i])
+                    ++count_y;
             }
-            if (count > maxCount) {
-                maxCount = count;
-                maxValue = arr[i];
+            if (count_x > maxCount_x) {
+                maxCount_x = count_x;
+                *mode_x = st.data_x[i];
+            } else if (count_y > maxCount_y) {
+                maxCount_y = count_y;
+                *mode_y = st.data_y[i];
             }
         }
-        return maxValue;
     }
 
     static double variance(double arr[], int size, double mean_value) {
@@ -125,9 +138,18 @@ public:
 
         return a, b;
     }
-
 };
+static struct math_struct{
+    double mean_x = st.data_x[0], mean_y = st.data_y[0];
+    double median_x = st.data_x[0], median_y = st.data_y[0];
+    double mode_x = st.data_x[0], mode_y = st.data_y[0];
+} mt;
 
 
+Math::~Math() {
+    cout << "s3777091 - HUYNH DAC TAN DAT" << endl;
+}
+
+static Math math;
 
 #endif //MAIN_CPP_MATH_H
