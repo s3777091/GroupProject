@@ -1,23 +1,30 @@
 //code from dathuynh
 #ifndef MAIN_CPP_STACK_H
 #define MAIN_CPP_STACK_H
+
 #include "../Function/QuickCard.h"
 using namespace std;
-#define MAX_ARRAY 51000
-class STACK{
+
+class STACK {
 public:
     STACK();
-    static bool push(int x, int y);
+
+    static auto push(int x, int y);
+
     static int isEmpty();
+
     static int isFull();
-    static void get_data(string data_file);
+
+    static void get_data(const string& data_file);
+
     static int sort();
 };
 
-static struct stack{
-    int top;
-    double* data_x = new double [MAX_ARRAY];
-    double* data_y = new double [MAX_ARRAY];
+static struct stack {
+    int top{};
+    int maxSize = 51000;
+    double *data_x = new double[maxSize];
+    double *data_y = new double[maxSize];
 } st;
 
 STACK::STACK() {
@@ -32,15 +39,15 @@ int STACK::isEmpty() {
 }
 
 int STACK::isFull() {
-    if (st.top == (MAX_ARRAY - 1))
+    if (st.top == (st.maxSize - 1))
         return 1;
     else
         return 0;
 }
 
-bool STACK::push(int x, int y) {
+auto STACK::push(int x, int y) {
     if (isFull()) {
-        cout << "Your Data is full" << endl;
+        cout << "Your Data is to larger" << endl;
         return false;
     }
     ++st.top;
@@ -51,16 +58,17 @@ bool STACK::push(int x, int y) {
 
 int STACK::sort() {
     while (!isEmpty()) {
-        function.quickSort<double>(st.data_x, 0, st.top);
-        function.quickSort<double>(st.data_y, 0, st.top);
+        QuickCard::quickSort<double>(st.data_x, 0, st.top);
+        QuickCard::quickSort<double>(st.data_y, 0, st.top);
         return 0;
     }
     cout << "Your Data is empty" << endl;
     return 1;
 }
 
-static STACK stk;
-void STACK::get_data(string data_file) {
+static STACK stack;
+
+void STACK::get_data(const string& data_file) {
     ifstream inFile(data_file);
     string line;
     if (!inFile) {
@@ -73,12 +81,11 @@ void STACK::get_data(string data_file) {
                 int x = atoi(string_x_number.c_str());
                 string string_y_number = line.substr(tab + 1);
                 int y = atoi(string_y_number.c_str());
-                stk.push(x, y);
+                push(x, y);
             }
         }
     }
     inFile.close();
 }
-
 
 #endif
