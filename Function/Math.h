@@ -63,37 +63,37 @@ static struct math_struct {
 
 template<typename M>
 void Math::mean(M *mean_x, M *mean_y) {
-    M sum_x = 0;
-    for (int i = 0; i < st.top; i++) {
+    double sum_x = 0;
+    for (int i = 0; i < st.top+1; i++) {
         sum_x += st.data_x[i];
     }
-    *mean_x = sum_x / st.top;
-    M sum_y = 0;
-    for (int j = 0; j < st.top; j++) {
+    *mean_x = sum_x / (st.top+1);
+    double sum_y = 0;
+    for (int j = 0; j < st.top+1; j++) {
         sum_y += st.data_y[j];
     }
-    *mean_y = sum_y / st.top;
+    *mean_y = sum_y / (st.top+1);
 }
 
 template<typename ME>
 void Math::median(ME *median_x, ME *median_y) {
-    int flag = st.top % 2;
+    int flag = (st.top+1) % 2;
     if (flag != 0) {
-        *median_x = st.data_x[((st.top - 1) / 2)];
-        *median_y = st.data_y[((st.top - 1) / 2)];
+        *median_x = st.data_x[((st.top / 2))];
+        *median_y = st.data_y[((st.top / 2))];
     } else {
-        *median_x = ((st.data_x[st.top / 2] + st.data_x[(st.top / 2) + 1]) / 2);
-        *median_y = ((st.data_y[st.top / 2] + st.data_y[(st.top / 2) + 1]) / 2);
+        *median_x = ((st.data_x[(st.top-1) / 2] + st.data_x[((st.top-1) / 2) + 1]) / 2);
+        *median_y = ((st.data_y[(st.top-1) / 2] + st.data_y[((st.top-1) / 2) + 1]) / 2);
     }
 }
 
 template<typename F>
 void Math::mode(F *mode_x, F *mode_y) {
     int maxCount_x = 0, maxCount_y = 0;
-    for (int i = 0; i < st.top; ++i) {
+    for (int i = 0; i < st.top+1; ++i) {
         int count_x = 0;
         int count_y = 0;
-        for (int j = 0; j < st.top; ++j) {
+        for (int j = 0; j < st.top+1; ++j) {
             if (st.data_x[j] == st.data_x[i])
                 ++count_x;
             if (st.data_y[j] == st.data_y[i])
@@ -102,7 +102,8 @@ void Math::mode(F *mode_x, F *mode_y) {
         if (count_x > maxCount_x) {
             maxCount_x = count_x;
             *mode_x = st.data_x[i];
-        } else if (count_y > maxCount_y) {
+        } 
+        else if (count_y > maxCount_y) {
             maxCount_y = count_y;
             *mode_y = st.data_y[i];
         }
@@ -112,45 +113,55 @@ void Math::mode(F *mode_x, F *mode_y) {
 template<typename V>
 void Math::variance(V *var_x, V *var_y) {
     double dev_x = 0.0, dev_y = 0.0;
-    for (int i = 1; i < st.top + 1; i++) {
+    for (int i = 0; i < st.top+1; i++) {
         dev_x += pow((st.data_x[i] - mt.mean_x), 2);
         dev_y += pow((st.data_y[i] - mt.mean_y), 2);
     }
-    *var_x = dev_x / (st.top - 1);
-    *var_y = dev_y / (st.top - 1);
+    *var_x = dev_x / (st.top );
+    *var_y = dev_y / (st.top );
 }
 
 template<typename Ma>
 void Math::mad(Ma *mad_x, Ma *mad_y) {
     double sum_x = 0, sum_y = 0;
-    for (int i = 1; i < st.top; i++) {
+    for (int i = 0; i < st.top+1; i++) {
         sum_x += abs(st.data_x[i] - mt.mean_x);
         sum_y += abs(st.data_y[i] - mt.mean_y);
     }
-    *mad_x = sum_x / st.top;
-    *mad_y = sum_y / st.top;
+    *mad_x = sum_x / (st.top+1);
+    *mad_y = sum_y / (st.top+1);
 }
 
 template<typename Th>
 void Math::ThirdQuartile(Th *Q3_x, Th *Q3_y) {
-    *Q3_x = st.data_x[(st.top * 3 / 4)];
-    *Q3_y = st.data_y[(st.top * 3 / 4)];
-    if ((fmod(st.data_x[st.top * 3 / 4], 2)) == 0) {
-        *Q3_x = (*Q3_x + st.data_x[(st.top * 3 / 4 - 3 / 4)]) / 2;
-    } else {
-        *Q3_x = (*Q3_x + st.data_x[(st.top * 3 / 4)]) / 2;
+    int flag = (st.top + 1) % 2;
+    int flag1 = ((st.top + 1) / 2) % 2;
+    if (flag != 0) {
+        if (flag1 != 0) {
+            *Q3_x = st.data_x[((st.top + 2) * 3 / 4)-1];
+            *Q3_y = st.data_y[((st.top + 2) * 3 / 4) - 1];
+        }
+        else if (flag1 == 0) {
+            *Q3_x = (st.data_x[((st.top ) * 3 / 4)] + st.data_x[((st.top ) * 3 / 4) +1])/2;;
+            *Q3_y = (st.data_y[((st.top ) * 3 / 4)] + st.data_y[((st.top ) * 3 / 4) +1])/2;
+        }
     }
-    if ((fmod(st.data_y[st.top * 3 / 4], 2)) == 0) {
-        *Q3_y = (*Q3_y + st.data_y[(st.top * 3 / 4 - 3 / 4)]) / 2;
-    } else {
-        *Q3_y = (*Q3_y + st.data_y[(st.top * 3 / 4)]) / 2;
+    else if (flag == 0) {
+        if (flag1 != 0) {
+            *Q3_x = st.data_x[((st.top + 3) * 3 / 4) - 2];
+            *Q3_y = st.data_y[((st.top + 3) * 3 / 4) - 2];
+        }
+        else if (flag1 == 0) {
+            *Q3_x = (st.data_x[((st.top + 1) * 3 / 4)-1 ] + st.data_x[((st.top + 1) * 3 / 4) ])/2;
+            *Q3_y = (st.data_y[((st.top + 1) * 3 / 4) -1] + st.data_y[((st.top + 1) * 3 / 4) ])/2;
+        }
     }
 }
 
 template<typename Sk>
 void Math::Skewness(Sk *Sk_x, Sk *Sk_y) {
     Sk sum_x = 0, sum_y = 0, s_x = sqrt(mt.var_x), s_y = sqrt(mt.var_y);
-    for (int i = 1; i < st.top; i++) {
+    for (int i = 0; i < st.top+1; i++) {
         sum_x += pow((st.data_x[i] - mt.mean_x) / s_x, 3);
         sum_y += pow((st.data_y[i] - mt.mean_y) / s_y, 3);
     }
@@ -163,35 +174,35 @@ void Math::kurtosis(Ku *Ku_x, Ku *Ku_y) {
     double m4_x = 0, m4_y = 0;
     double s_x = sqrt(mt.var_x);
     double s_y = sqrt(mt.var_y);
-    for (int i = 1; i < st.top + 1; i++) {
+    for (int i = 0; i < st.top+1; i++) {
         m4_x += pow((st.data_x[i] - mt.mean_x) / s_x, 4);
         m4_y += pow((st.data_y[i] - mt.mean_y) / s_y, 4);
     }
-    *Ku_x = (m4_x / st.top) - 3;
-    *Ku_y = (m4_y / st.top) - 3;
+    *Ku_x = (m4_x / (st.top+1)) - 3;
+    *Ku_y = (m4_y / (st.top+1)) - 3;
 }
 
 template<typename Co>
 void Math::covariance(Co *Co_x_y) {
     Co sum = 0;
-    for (int i = 1; i < st.top + 1; i++) {
+    for (int i = 0; i < st.top+1; i++) {
         sum += ((st.data_x[i] - mt.mean_x) * (st.data_y[i] - mt.mean_y));
     }
-    *Co_x_y = sum / (st.top - 1);
+    *Co_x_y = sum / (st.top);
 }
 
 template<typename Ce>
 void Math::Coefficient(Ce *Coefficient_x_y) {
     Ce sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0, sumY2 = 0;
-    for (int i = 1; i < st.top + 1; i++) {
+    for (int i = 0; i < st.top+1; i++) {
         sumX += st.data_x[i];
         sumY += st.data_y[i];
         sumXY += (st.data_x[i] * st.data_y[i]);
         sumX2 += (st.data_x[i] * st.data_x[i]);
         sumY2 += (st.data_y[i] * st.data_y[i]);
     }
-    *Coefficient_x_y = (st.top * sumXY - sumX * sumY)
-                       / sqrt((st.top * sumX2 - sumX * sumX) * (st.top * sumY2 - sumY * sumY));
+    *Coefficient_x_y = ((st.top+1) * sumXY - sumX * sumY)
+                       / sqrt(((st.top+1) * sumX2 - sumX * sumX) * ((st.top+1) * sumY2 - sumY * sumY));
 }
 
 template<typename Re>
