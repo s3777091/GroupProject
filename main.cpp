@@ -7,50 +7,63 @@
 using namespace std;
 
 
-void display(string Algorithm_a,double value_a, string Algorithm_b, double value_b){
-    cout << Algorithm_a << ":" << setw(3)
-    << value_a << setw(3) << "| " << setw(3)
-    << Algorithm_b << " : " << setw(3)
-    << value_b << setw(3) << "|" << endl;
+void display(string Algorithm_a, double value_a, string Algorithm_b, double value_b) {
+    cout << setprecision(6)
+    << setw(0) << Algorithm_a << ": " 
+    << setw(20-Algorithm_a.size()) <<value_a << "| "
+    << Algorithm_b << ": "  << setw(20-Algorithm_b.size())
+    << value_b  << "|" << endl;
 }
+
+
 int main() {
     try {
-        string data_file = R"(C:\Users\Asus\Desktop\GA1C++\Data\data1.csv)";
+        string data_file = R"(C:\rmit\EEET2482\Data\data1.csv)";
         stack.get_data(data_file);
         stack.sort();
 
-        Math::mean<double>(&mt.mean_x, &mt.mean_y);
 
+        cout << "Descriptive Statistics" << endl;
+        Math::mean<double>(&mt.mean_x, &mt.mean_y);
+        display("mean_x",mt.mean_x,"mean_y", mt.mean_y);
+   
         Math::median<double>(&mt.median_x, &mt.median_y);
         display("median_x",mt.median_x, "median_y", mt.median_y);
-
+        
         Math::mode<double>(&mt.mode_x, &mt.mode_y);
         display("mode_x", mt.mode_x, "mode_y", mt.mode_y);
-
+       
         Math::variance<double>(&mt.var_x, &mt.var_y);
         display("var_x", mt.var_x, "var_y", mt.var_y);
-
+        display("stdev_x", sqrt(mt.var_x), "stdev_y", sqrt(mt.var_y));
+        
         Math::mad<double>(&mt.mad_x, &mt.mad_y);
-        cout << "mad_x= " << mt.mad_x << ", " << "mad_y= " << mt.mad_y << endl;
+        display("mad_x", mt.mad_x , "mad_y", mt.mad_y);
 
         Math::ThirdQuartile<double>(&mt.Q3_x, &mt.Q3_y);
-        cout << "Q3_x= " << mt.Q3_x << ", " << "q3_y= " << mt.Q3_y << endl;
+        display("Q3_x", mt.Q3_x, "Q3_y", mt.Q3_y);
 
         Math::Skewness<double>(&mt.Sk_x, &mt.Sk_y);
-        cout << "skew_x= " << mt.Sk_x << ", " << "skew_y= " << mt.Sk_y << endl;
+        display("skew_x", mt.Sk_x, "skew_y", mt.Sk_y);
 
         Math::kurtosis<double>(&mt.Ku_x, &mt.Ku_y);
-        cout << "kurt_x= " << mt.Ku_x << ", " << "kurt_y= " << mt.Ku_y << endl;
+        display("kurt_x", mt.Ku_x, "kurt_y", mt.Ku_y);
+
+        cout << "--------------------------------" << endl;
+        cout << "Inferential Statistics" << endl;
 
         Math::covariance<double>(&mt.Co_x_y);
-        cout << "cov(x_y)= " << mt.Co_x_y << endl;
+        cout << setprecision(6) << "cov(x_y): " <<setw(12) << mt.Co_x_y << endl;
+
 
         Math::Coefficient<double>(&mt.Coefficient_x_y);
-        cout << "r(x_y)= " << mt.Coefficient_x_y << endl;
+        cout << setprecision(6) << "r(x_y): " << setw(14) << mt.Coefficient_x_y << endl;
 
         Math::Regression_a<double>(&mt.re_a);
         Math::Regression_b<double>(&mt.re_b);
         cout << "y = " << mt.re_a << "x" << " + " << mt.re_b << endl;
+
+        cout << "--------------------------------" << endl;
 
         cout
         << "s3777091 - HUYNH DAC TAN DAT" << "\n"
