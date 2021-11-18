@@ -47,14 +47,14 @@ public:
 };
 
 static struct math_struct {
-    double mean_x = st.data_x[0], mean_y = st.data_y[0];
-    double median_x = st.data_x[0], median_y = st.data_y[0];
-    double mode_x = st.data_x[0], mode_y = st.data_y[0];
-    double var_x = st.data_x[0], var_y = st.data_y[0];
-    double mad_x = st.data_x[0], mad_y = st.data_y[0];
-    double Q3_x = st.data_x[0], Q3_y = st.data_y[0];
-    double Sk_x = st.data_x[0], Sk_y = st.data_y[0];
-    double Ku_x = st.data_x[0], Ku_y = st.data_y[0];
+    double mean_x = 0, mean_y = 0;
+    double median_x = 0, median_y = 0;
+    double mode_x = 0, mode_y = 0;
+    double var_x = 0, var_y = 0;
+    double mad_x = 0, mad_y = 0;
+    double Q3_x = 0, Q3_y = 0;
+    double Sk_x = 0, Sk_y = 0;
+    double Ku_x = 0, Ku_y = 0;
     double Co_x_y = 0;
     double Coefficient_x_y = 0;
     double re_a = 0, re_b = 0;

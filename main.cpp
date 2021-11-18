@@ -3,12 +3,10 @@
 #include<iomanip>
 #include "Model/STACK.h"
 #include "Function/Math.h"
-
 using namespace std;
 
-
 void display(string Algorithm_a, double value_a, string Algorithm_b, double value_b) {
-    cout << setprecision(6)
+    cout << "|"<< setprecision(6)
     << setw(0) << Algorithm_a << ": " 
     << setw(20-Algorithm_a.size()) <<value_a << "| "
     << Algorithm_b << ": "  << setw(20-Algorithm_b.size())
@@ -16,14 +14,15 @@ void display(string Algorithm_a, double value_a, string Algorithm_b, double valu
 }
 
 
+
 int main() {
     try {
-        string data_file = R"(C:\rmit\EEET2482\Data\data1.csv)";
+        string data_file = R"(../Data/data1.csv)";
         stack.get_data(data_file);
         stack.sort();
-
-
+        system("color B0");
         cout << "Descriptive Statistics" << endl;
+        cout << "------------------------------------------------" << endl;
         Math::mean<double>(&mt.mean_x, &mt.mean_y);
         display("mean_x",mt.mean_x,"mean_y", mt.mean_y);
    
@@ -49,7 +48,7 @@ int main() {
         Math::kurtosis<double>(&mt.Ku_x, &mt.Ku_y);
         display("kurt_x", mt.Ku_x, "kurt_y", mt.Ku_y);
 
-        cout << "--------------------------------" << endl;
+        cout << "------------------------------------------------" << endl;
         cout << "Inferential Statistics" << endl;
 
         Math::covariance<double>(&mt.Co_x_y);
@@ -63,12 +62,13 @@ int main() {
         Math::Regression_b<double>(&mt.re_b);
         cout << "y = " << mt.re_a << "x" << " + " << mt.re_b << endl;
 
-        cout << "--------------------------------" << endl;
+        cout << "------------------------------------------------" << endl;
 
         cout
-        << "s3777091 - HUYNH DAC TAN DAT" << "\n"
-        <<"s3845565 - DO HUNG SON" << "\n"
-        << "s3915177 - TRINH VAN MINH DUC"
+        <<"ASSIGNMENT 1GROUP<TT>" "\n"
+        << "s3777091,s3777091@rmit.edu.vn - DAT HUYNH" << "\n"
+        <<"s3845565,s3845565@rmit.edu.vn - SON DO" << "\n"
+        << "s3915177,s3915177@rmit.edu.vn - DUC TRINH"
         << endl;
 
     } catch (const system_error &error) {

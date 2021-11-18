@@ -3,19 +3,15 @@
 #define MAIN_CPP_STACK_H
 
 #include "../Function/QuickCard.h"
+
 using namespace std;
 
 class STACK {
 public:
     STACK();
-
     static auto push(double x, double y);
-
     static int isEmpty();
-    
-
     static int isFull();
-
     static void get_data(const string& data_file);
 
     static int sort();
@@ -32,18 +28,18 @@ static struct stack {
     double *data_y = new double[maxSize];
 } st;
 
-STACK::STACK() {
-    st.top = -1 ;
-}
-
 bool STACK::emptyCell(string val) {
     if (val.empty()) {
         return true;
     }
     else
         return false;
-    return true;
 }
+
+STACK::STACK() {
+    st.top = -1 ;
+}
+
 
 int STACK::isEmpty() {
     if (st.top == -1)
@@ -53,8 +49,7 @@ int STACK::isEmpty() {
 }
 
 
-bool STACK::isValid(string val) { 
-
+bool STACK::isValid(string val) {
     const char* p = val.c_str();
     int dot_counter = 0; 
     if ((*p) == '+' || (*p) == '-')p++; 
@@ -81,32 +76,28 @@ int STACK::isFull() {
 
 auto STACK::push(double x, double y) {
     if (isFull()) {
-        cout << "Your Data is to larger" << endl;
-        return false;
+        cout << "Your Data is Full now" << endl;
     }
     ++st.top;
     st.data_x[st.top] = x;
     st.data_y[st.top] = y;
-    return true;
 }
 
 int STACK::sort() {
     while (!isEmpty()) {
-        QuickCard::quickSort<double>(st.data_x, 0, st.top);
-        QuickCard::quickSort<double>(st.data_y, 0, st.top);
+        QuickCard::quickSort(st.data_x, 0, st.top);
+        QuickCard::quickSort(st.data_y, 0, st.top);
         return 0;
     }
     cout << "Your Data is empty" << endl;
     return 1;
 }
-
-static STACK stack;
-
 void STACK::get_data(const string& data_file) {
     ifstream inFile(data_file);
     string line;
     if (!inFile) {
-        cout << "That file can't open." << endl;
+        cerr << "failed to open files for input\n";
+        exit( 3 );
     } else {
         while (getline(inFile, line, '\n')) {
             size_t tab = line.find(',');
@@ -126,4 +117,5 @@ void STACK::get_data(const string& data_file) {
     inFile.close();
 }
 
+static STACK stack;
 #endif
