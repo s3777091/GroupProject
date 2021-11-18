@@ -9,15 +9,20 @@ class STACK {
 public:
     STACK();
 
-    static auto push(int x, int y);
+    static auto push(double x, double y);
 
     static int isEmpty();
+    
 
     static int isFull();
 
     static void get_data(const string& data_file);
 
     static int sort();
+
+    static bool isValid(string val);
+    
+    static bool emptyCell(string val);
 };
 
 static struct stack {
@@ -28,7 +33,16 @@ static struct stack {
 } st;
 
 STACK::STACK() {
-    st.top = -1;
+    st.top = -1 ;
+}
+
+bool STACK::emptyCell(string val) {
+    if (val.empty()) {
+        return true;
+    }
+    else
+        return false;
+    return true;
 }
 
 int STACK::isEmpty() {
@@ -38,6 +52,26 @@ int STACK::isEmpty() {
         return 0;
 }
 
+
+bool STACK::isValid(string val) { 
+
+    const char* p = val.c_str();
+    int dot_counter = 0; 
+    if ((*p) == '+' || (*p) == '-')p++; 
+    while ((*p) != '\0') 
+    { 
+        if ((*p) == '.') 
+        { 
+            dot_counter++; 
+            if (dot_counter > 1)
+                return false; 
+        } 
+        else if ((*p) < '0' || (*p) > '9')
+            return false; p++; 
+    }
+    return true; 
+}
+
 int STACK::isFull() {
     if (st.top == (st.maxSize - 1))
         return 1;
@@ -45,7 +79,7 @@ int STACK::isFull() {
         return 0;
 }
 
-auto STACK::push(int x, int y) {
+auto STACK::push(double x, double y) {
     if (isFull()) {
         cout << "Your Data is to larger" << endl;
         return false;
@@ -78,10 +112,14 @@ void STACK::get_data(const string& data_file) {
             size_t tab = line.find(',');
             if (tab != std::string::npos) {
                 string string_x_number = line.substr(0, tab);
-                int x = atoi(string_x_number.c_str());
-                string string_y_number = line.substr(tab + 1);
-                int y = atoi(string_y_number.c_str());
-                push(x, y);
+                string string_y_number = line.substr(tab +1,'\n');
+                if (!emptyCell(string_x_number) && (!emptyCell(string_y_number))) {
+                    if (isValid(string_x_number) && isValid(string_y_number)) {
+                        double x = atof(string_x_number.c_str());
+                        double y = atof(string_y_number.c_str());
+                        push(x, y);
+                    }
+                }
             }
         }
     }
