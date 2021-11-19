@@ -5,6 +5,8 @@ using namespace std;
 #ifndef MAIN_CPP_MATH_H
 #define MAIN_CPP_MATH_H
 
+
+//Call all Math Algorithm in and inherent all function and data from Stack.
 class Math : public STACK {
 public:
     virtual ~Math();
@@ -43,24 +45,19 @@ public:
 
     template<typename ReB>
     static void Regression_b(ReB *re_b);
-
 };
 
+//Struct to capacity of all value.
 static struct math_struct {
-    double mean_x = 0, mean_y = 0;
-    double median_x = 0, median_y = 0;
-    double mode_x = 0, mode_y = 0;
-    double var_x = 0, var_y = 0;
-    double mad_x = 0, mad_y = 0;
-    double Q3_x = 0, Q3_y = 0;
-    double Sk_x = 0, Sk_y = 0;
-    double Ku_x = 0, Ku_y = 0;
-    double Co_x_y = 0;
-    double Coefficient_x_y = 0;
-    double re_a = 0, re_b = 0;
+    double mean_x = 0, mean_y = 0, median_x = 0, median_y = 0, mode_x = 0, mode_y = 0,
+    var_x = 0, var_y = 0, mad_x = 0, mad_y = 0, Q3_x = 0, Q3_y = 0, Sk_x = 0, Sk_y = 0,
+    Ku_x = 0, Ku_y = 0,Co_x_y = 0,Coefficient_x_y = 0,re_a = 0, re_b = 0;
 } mt;
 
+//IN this File of code I use template because while
+// i change to float or int it will be fast and friendly to look
 
+//Function to calculate Mean
 template<typename M>
 void Math::mean(M *mean_x, M *mean_y) {
     double sum_x = 0;
@@ -75,6 +72,8 @@ void Math::mean(M *mean_x, M *mean_y) {
     *mean_y = sum_y / (st.top+1);
 }
 
+
+//Function to calculate median
 template<typename ME>
 void Math::median(ME *median_x, ME *median_y) {
     int flag = (st.top+1) % 2;
@@ -87,6 +86,7 @@ void Math::median(ME *median_x, ME *median_y) {
     }
 }
 
+//Function to calculate mode this line of code take a lot of time but i don't know how to code it better
 template<typename F>
 void Math::mode(F *mode_x, F *mode_y) {
     int maxCount_x = 0, maxCount_y = 0;
@@ -99,10 +99,11 @@ void Math::mode(F *mode_x, F *mode_y) {
             if (st.data_y[j] == st.data_y[i])
                 ++count_y;
         }
+
         if (count_x > maxCount_x) {
             maxCount_x = count_x;
             *mode_x = st.data_x[i];
-        } 
+        }
         else if (count_y > maxCount_y) {
             maxCount_y = count_y;
             *mode_y = st.data_y[i];
@@ -110,6 +111,8 @@ void Math::mode(F *mode_x, F *mode_y) {
     }
 }
 
+
+//Function to calculate Variance
 template<typename V>
 void Math::variance(V *var_x, V *var_y) {
     double dev_x = 0.0, dev_y = 0.0;
@@ -121,6 +124,8 @@ void Math::variance(V *var_x, V *var_y) {
     *var_y = dev_y / (st.top );
 }
 
+
+//Function to calculate Mad
 template<typename Ma>
 void Math::mad(Ma *mad_x, Ma *mad_y) {
     double sum_x = 0, sum_y = 0;
@@ -132,6 +137,7 @@ void Math::mad(Ma *mad_x, Ma *mad_y) {
     *mad_y = sum_y / (st.top+1);
 }
 
+//Function To calculate Q3
 template<typename Th>
 void Math::ThirdQuartile(Th *Q3_x, Th *Q3_y) {
     int flag = (st.top + 1) % 2;
@@ -158,6 +164,8 @@ void Math::ThirdQuartile(Th *Q3_x, Th *Q3_y) {
     }
 }
 
+
+//Function to calculate Skewness
 template<typename Sk>
 void Math::Skewness(Sk *Sk_x, Sk *Sk_y) {
     Sk sum_x = 0, sum_y = 0, s_x = sqrt(mt.var_x), s_y = sqrt(mt.var_y);
@@ -169,6 +177,7 @@ void Math::Skewness(Sk *Sk_x, Sk *Sk_y) {
     *Sk_y = sum_y / st.top;
 }
 
+//Function to calculate kurtosis
 template<typename Ku>
 void Math::kurtosis(Ku *Ku_x, Ku *Ku_y) {
     double m4_x = 0, m4_y = 0;
@@ -182,6 +191,7 @@ void Math::kurtosis(Ku *Ku_x, Ku *Ku_y) {
     *Ku_y = (m4_y / (st.top+1)) - 3;
 }
 
+//Function to calculate Covariance
 template<typename Co>
 void Math::covariance(Co *Co_x_y) {
     Co sum = 0;
@@ -191,6 +201,7 @@ void Math::covariance(Co *Co_x_y) {
     *Co_x_y = sum / (st.top);
 }
 
+//Function to calculate Coefficient
 template<typename Ce>
 void Math::Coefficient(Ce *Coefficient_x_y) {
     Ce sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0, sumY2 = 0;
@@ -205,16 +216,20 @@ void Math::Coefficient(Ce *Coefficient_x_y) {
                        / sqrt(((st.top+1) * sumX2 - sumX * sumX) * ((st.top+1) * sumY2 - sumY * sumY));
 }
 
+//Function to calculate Regression value of a
 template<typename Re>
 void Math::Regression_a(Re *re_a) {
     *re_a = (mt.Coefficient_x_y * sqrt(mt.var_y))/ sqrt(mt.var_x);
 }
+
+//Function to calculate Regression value of b
 template<typename ReB>
 void Math::Regression_b(ReB *re_b){
     *re_b = mt.mean_y - (mt.re_a * mt.mean_x);
 }
 
 
+//destruction while it done
 Math::~Math() {
 }
 
