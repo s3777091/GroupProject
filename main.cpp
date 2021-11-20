@@ -23,12 +23,17 @@ string get_path(const string &file_name) {
     return path;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+    if (argc != 2) {
+        cerr << "Wrong input";
+        return 1;
+    }
+    string filename = argv[1];
     //try/catch err if programme critical contain problem continue to work and show err
     try {
         STACK stk;
         //Get all data and push it into Stack
-        stk.get_data(get_path("data1.csv"));
+        stk.get_data(get_path(filename));
         //Sort all data
         stk.sort();
         cout.setf(ios::fixed);
