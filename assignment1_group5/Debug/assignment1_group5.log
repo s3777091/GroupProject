@@ -1,0 +1,3 @@
+﻿  assignment1_group5.cpp
+C:\Users\trinh\source\repos\assignment1_group5\QuickCard.h(35,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  assignment1_group5.vcxproj -> C:\Users\trinh\source\repos\assignment1_group5\Debug\assignment1_group5.exe
