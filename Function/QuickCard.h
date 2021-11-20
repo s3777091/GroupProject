@@ -2,6 +2,7 @@
 #include<string>
 #include <math.h>
 #include <fstream>
+
 using namespace std;
 //Available at: https://rmit.instructure.com/courses/95403/files/20686257/download?download_frd=1 (Accessed:2 November 2021).
 
@@ -11,7 +12,9 @@ using namespace std;
 class QuickCard {
 public:
     static void Swap(double *a, double *b);
-    static int partition (double *arr, int low, int high);
+
+    static int partition(double *arr, int low, int high);
+
     static void quickSort(double *arr, int low, int high);
 };
 //create 3 function in QuickCard, QuickCard is the function adding in project
@@ -28,11 +31,11 @@ void QuickCard::Swap(double *a, double *b) {
  * array, and places all smaller (smaller than pivot)
  * to left of pivot and all greater elements to right
  * of pivot */
-int QuickCard::partition (double *arr, int low, int high) {
+int QuickCard::partition(double *arr, int low, int high) {
     int pivot = arr[high];
     int i = (low - 1);
 
-    for (int j = low; j <= high- 1; j++) {
+    for (int j = low; j <= high - 1; j++) {
         if (arr[j] <= pivot) {
             i++;
             Swap(&arr[i], &arr[j]);
