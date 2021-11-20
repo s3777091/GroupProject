@@ -16,23 +16,17 @@ void display(const string& Algorithm_a, double value_a, const string& Algorithm_
         << value_b << "|" << endl;
 }
 
-/*string get_path(const string& file_name) {
-    string path = __FILE__;
-    path.replace(path.end() - 8, path.end(), "").append(file_name);
-    return path;
-}*/
 
 int main(int argc, char* argv[]) {
     if (argc != 2) {
-        cerr << "Wrong input";
+        cerr << "Wrong input!";
         return 1;
     }
-    string filename = argv[1];
+    string filename = argv[1]; //take in user input
     //try/catch err if programme critical contain problem continue to work and show err
     try {
         STACK stk;
         //Get all data and push it into Stack
-        //stk.get_data(get_path(filename));
         stk.get_data(filename);
         //Sort all data
         stk.sort();
@@ -48,24 +42,17 @@ int main(int argc, char* argv[]) {
         display("mean_x", mt.mean_x, "mean_y", mt.mean_y);
         display("median_x", mt.median_x, "median_y", mt.median_y);
         display("mode_x", mt.mode_x, "mode_y", mt.mode_y);
-
         display("var_x", mt.var_x, "var_y", mt.var_y);
         display("stdev_x", sqrt(mt.var_x), "stdev_y", sqrt(mt.var_y));
-
         display("mad_x", mt.mad_x, "mad_y", mt.mad_y);
         display("Q3_x", mt.Q3_x, "Q3_y", mt.Q3_y);
-
         display("skew_x", mt.Sk_x, "skew_y", mt.Sk_y);
-
         display("kurt_x", mt.Ku_x, "kurt_y", mt.Ku_y);
-
         cout << "------------------------------------------------" << endl;
         cout << "Inferential Statistics" << endl;
-
         cout << setprecision(4) << "cov(x_y): " << setw(12) << mt.Co_x_y << endl;
         cout << setprecision(4) << "r(x_y): " << setw(14) << mt.Coefficient_x_y << endl;
         cout << "y = " << mt.re_a << "x" << " + " << mt.re_b << endl;
-
         cout << "------------------------------------------------" << endl;
         //Show All student who contribute to this project
         cout

@@ -10,7 +10,7 @@ using namespace std;
 class Math : public STACK {
 public:
     virtual ~Math();
-
+    //Declare function
     template<typename M>
     static void mean(M* mean_x, M* mean_y);
 
@@ -57,8 +57,8 @@ static struct math_struct {
         Ku_x = 0, Ku_y = 0, Co_x_y = 0, Coefficient_x_y = 0, re_a = 0, re_b = 0;
 } mt;
 
-//IN this File of code I use template because while
-// i change to float or int it will be fast and friendly to look
+/*IN this File of code I use template because while
+i change to float or int it will be fast and friendly to look*/
 
 //Function to calculate Mean
 template<typename M>
@@ -220,13 +220,13 @@ void Math::Coefficient(Ce* Coefficient_x_y) {
         / sqrt(((st.top + 1) * sumX2 - sumX * sumX) * ((st.top + 1) * sumY2 - sumY * sumY));
 }
 
-//Function to calculate Regression value of a
+//Function to calculate Regression value a
 template<typename Re>
 void Math::Regression_a(Re* re_a) {
     *re_a = (mt.Coefficient_x_y * sqrt(mt.var_y)) / sqrt(mt.var_x);
 }
 
-//Function to calculate Regression value of b
+//Function to calculate Regression value b
 template<typename ReB>
 void Math::Regression_b(ReB* re_b) {
     *re_b = mt.mean_y - (mt.re_a * mt.mean_x);

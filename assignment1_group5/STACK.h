@@ -36,8 +36,8 @@ public:
     static void update(const string& data_file);
 };
 
-//structure of Stack include top to know the max value of Stack maxSize is the limit of array
-//and Two array data_x and data_y is the array to that is capacity of two value of x and y in csv file
+/*structure of Stack include top to know the max value of Stack maxSize is the limit of array
+and Two array data_x and data_y is the array to that is capacity of two value of x and y in csv file*/
 static struct stack {
     int top{};
     int line{};
@@ -46,7 +46,7 @@ static struct stack {
     double* data_y = new double[maxSize];
 } st;
 
-//Function to check is that Value in data.csv is empty or not?
+//Function to check is the value from the file is empty or not
 bool ST emptyCell(const string& val) {
     if (val.empty()) {
         return true;
@@ -68,7 +68,7 @@ int ST isEmpty() {
         return 0;
 }
 
-//Function checking input value in data.csv is wrong or not
+//Function checking value from the input file is in valid form or not
 bool ST isValid(const string& val) {
     const char* p = val.c_str();
     int dot_counter = 0;
@@ -146,12 +146,12 @@ void ST get_data_line(const string& data_file) {
         //Checking if fail to open file exit the code
     }
     else {
-        // Explain this Algorithm in this line of code
+        //Get the number of row from the input file
         while (getline(inFile, line, '\n')) {
             st.line++;
         }
     }
-    inFile.close();
+    inFile.close();//close file
 }
 
 //Function to read data from String file then add it in Stack
@@ -165,7 +165,7 @@ void ST get_data(const string& data_file) {
         //Checking if fail to open file exit the code
     }
     else {
-        // Explain this Algorithm in this line of code
+        //Function to get data from input file by row 
         while (getline(inFile, line, '\n')) {
             // while loop to get everything in this file.csv while it see the end of \n it will stop
             size_t tab = line.find(',');
@@ -194,7 +194,7 @@ void ST get_data(const string& data_file) {
             }
         }
     }
-    inFile.close();
+    inFile.close(); //close file
 }
 
 //Public Stack implement by the name stack
